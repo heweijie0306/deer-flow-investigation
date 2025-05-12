@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deer Flow: AI Agent Workflow System</title>
+    <!-- Add Mermaid.js for flowcharts -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'neutral',
+                fontSize: 16,
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis',
+                    diagramPadding: 8
+                },
+                sequence: {
+                    useMaxWidth: true,
+                    diagramMarginX: 8,
+                    diagramMarginY: 8,
+                    boxMargin: 8
+                },
+                gantt: {
+                    useMaxWidth: true
+                },
+                classDiagram: {
+                    useMaxWidth: true
+                }
+            });
+        });
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #3a7563;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header p {
+            margin-top: 10px;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        section {
+            background-color: white;
+            padding: 35px 40px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        h2 {
+            color: #2c5d4b;
+            border-bottom: 2px solid #e9e9e9;
+            padding-bottom: 15px;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #2c5d4b;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            max-width: 100%;
+            margin: 25px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            overflow-x: auto;
+            display: block;
+            max-width: 100%;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .flow-diagram {
+            background-color: #fafcf9;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 30px 0;
+            text-align: center;
+            overflow-x: auto;
+            font-size: 1.1em;
+        }
+        .arrow {
+            color: #3a7563;
+            font-weight: bold;
+            padding: 0 8px;
+        }
+        .example {
+            background-color: #f5f9f7;
+            border-left: 4px solid #3a7563;
+            padding: 20px 25px;
+            margin: 30px 0;
+            font-size: 1.1em;
+        }
+        .highlight {
+            background-color: #e8f4f0;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .mermaid {
+            background-color: #fafcf9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 30px auto;
+            text-align: center;
+            overflow-x: auto;
+            max-width: 100%;
+            white-space: nowrap;
+        }
+        .chart-container {
+            margin: 40px 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fafcf9;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .chart-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #3a7563;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        
+        /* Force SVG containment */
+        .mermaid svg {
+            max-width: 100%;
+            height: auto !important;
+        }
+        
+        /* Responsive adjustments */
+        @media screen and (max-width: 1200px) {
+            body {
+                padding: 15px;
+            }
+            section {
+                padding: 25px;
+            }
+            .mermaid {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Deer Flow: AI Agent Workflow System</h1>
+        <p>A comprehensive explanation of core architecture and logic</p>
+    </header>
+
+    <section>
+        <h2>Core Architecture</h2>
+        <p>
+            Deer Flow is an AI agent workflow system that processes user queries through a directed computational graph of specialized agents. 
+            The system uses LangGraph to orchestrate the flow of information between agents, with each agent performing specific tasks and 
+            contributing to the final response.
+        </p>
+        
+        <div class="chart-container">
+            <div class="chart-title">System Architecture Overview</div>
+            <div class="mermaid">
+flowchart TB
+    User(("User")) <---> WorkflowEngine
+
+    subgraph DeerFlowSystem["Deer Flow System"]
+        WorkflowEngine[Workflow Engine]
+        State[(Shared State)]
+        
+        subgraph AgentGraph["Agent Graph"]
+            Coordinator[Coordinator]
+            BgInvestigator[Background Investigator]
+            Planner[Planner]
+            Feedback[Human Feedback]
+            ResearchTeam[Research Team]
+            Researcher[Researcher]
+            Coder[Coder]
+            Reporter[Reporter]
+        end
+        
+        subgraph ExternalTools["External Tools"]
+            WebSearch[Web Search]
+            CodeExec[Code Execution]
+            MCP[MCP Tools]
+        end
+    end
+    
+    WorkflowEngine <---> State
+    AgentGraph <---> State
+    AgentGraph <---> ExternalTools
+    
+    classDef highlight fill:#3a7563,stroke:#333,stroke-width:1px,color:white;
+    class WorkflowEngine,State highlight;
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Key Components</h2>
+        
+        <h3>1. Workflow Engine</h3>
+        <ul>
+            <li>Uses a directed graph to manage task flow</li>
+            <li>Processes user input through specialized agent nodes</li>
+            <li>Maintains shared state across the entire workflow</li>
+            <li>Streams results back to users in real-time</li>
+        </ul>
+
+        <h3>2. State Management</h3>
+        <pre><code>class State(MessagesState):
+    locale: str = "en-US"
+    observations: list[str] = []
+    plan_iterations: int = 0
+    current_plan: Plan | str = None
+    final_report: str = ""
+    auto_accepted_plan: bool = False
+    enable_background_investigation: bool = True
+    background_investigation_results: str = None</code></pre>
+
+        <div class="chart-container">
+            <div class="chart-title">State Management Visualization</div>
+            <div class="mermaid">
+classDiagram
+    class MessagesState {
+        messages: List
+    }
+    class State {
+        locale: str
+        observations: list[str]
+        plan_iterations: int
+        current_plan: Plan|str
+        final_report: str
+        auto_accepted_plan: bool
+        enable_background_investigation: bool
+        background_investigation_results: str
+    }
+    MessagesState <|-- State
+            </div>
+        </div>
+
+        <h3>3. Agent Graph</h3>
+        <div class="flow-diagram">
+            START <span class="arrow">→</span> coordinator <span class="arrow">→</span> background_investigator <span class="arrow">→</span> planner <span class="arrow">→</span> human_feedback <span class="arrow">→</span> research_team <span class="arrow">→</span> [researcher/coder] <span class="arrow">→</span> reporter <span class="arrow">→</span> END
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-title">Complete Agent Graph with Decision Points</div>
+            <div class="mermaid">
+flowchart LR
+    START(("START")) --> Coordinator
+    
+    Coordinator --> |"If needs research"| BgCheck{"Background\nInvestigation\nEnabled?"}
+    Coordinator --> |"If no research needed"| END
+    
+    BgCheck --> |"Yes"| BgInvestigator
+    BgCheck --> |"No"| Planner
+    
+    BgInvestigator --> Planner
+    
+    Planner --> |"Plan needs review"| HumanFeedback
+    Planner --> |"Plan complete"| Reporter
+    
+    HumanFeedback --> |"Edit requested"| Planner
+    HumanFeedback --> |"Approved"| ResearchTeam
+    
+    ResearchTeam --> |"Research step"| Researcher
+    ResearchTeam --> |"Processing step"| Coder
+    ResearchTeam --> |"All steps complete"| Planner
+    
+    Researcher --> ResearchTeam
+    Coder --> ResearchTeam
+    
+    Reporter --> END(("END"))
+    
+    classDef primary fill:#3a7563,stroke:#333,stroke-width:1px,color:white;
+    classDef decision fill:#f5d742,stroke:#333,stroke-width:1px;
+    classDef endpoint fill:#9c3f3f,stroke:#333,stroke-width:1px,color:white;
+    
+    class Coordinator,Planner,Reporter primary
+    class BgCheck decision
+    class START,END endpoint
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Agent Roles</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Agent</th>
+                    <th>Responsibility</th>
+                    <th>Tools</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Coordinator</strong></td>
+                    <td>Initial query analysis</td>
+                    <td>handoff_to_planner</td>
+                </tr>
+                <tr>
+                    <td><strong>Background Investigator</strong></td>
+                    <td>Web search for context</td>
+                    <td>TavilySearch</td>
+                </tr>
+                <tr>
+                    <td><strong>Planner</strong></td>
+                    <td>Creates execution plan</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><strong>Human Feedback</strong></td>
+                    <td>Reviews/approves plans</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><strong>Research Team</strong></td>
+                    <td>Routes to specialists</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><strong>Researcher</strong></td>
+                    <td>Information gathering</td>
+                    <td>web_search_tool, crawl_tool</td>
+                </tr>
+                <tr>
+                    <td><strong>Coder</strong></td>
+                    <td>Code execution</td>
+                    <td>python_repl_tool</td>
+                </tr>
+                <tr>
+                    <td><strong>Reporter</strong></td>
+                    <td>Final report generation</td>
+                    <td>None</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="chart-container">
+            <div class="chart-title">Agent Tool Integration</div>
+            <div class="mermaid">
+flowchart TB
+    subgraph ToolsSection["Tools"]
+        HandoffTool["handoff_to_planner"]
+        SearchTools["TavilySearch\nweb_search_tool\ncrawl_tool"]
+        PythonTool["python_repl_tool"]
+        MCPTools["External MCP Tools"]
+    end
+    
+    subgraph AgentsSection["Agents"]
+        Coordinator["Coordinator"]
+        BgInvestigator["Background\nInvestigator"]
+        Researcher["Researcher"]
+        Coder["Coder"]
+    end
+    
+    Coordinator -->|"uses"| HandoffTool
+    BgInvestigator -->|"uses"| SearchTools
+    Researcher -->|"uses"| SearchTools
+    Researcher -.->|"can use"| MCPTools
+    Coder -->|"uses"| PythonTool
+    Coder -.->|"can use"| MCPTools
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Execution Flow</h2>
+
+        <h3>1. Query Processing</h3>
+        <ul>
+            <li>User input enters at Coordinator</li>
+            <li>Coordinator decides whether planning is needed</li>
+            <li>Optional background investigation enhances context</li>
+        </ul>
+
+        <h3>2. Planning Phase</h3>
+        <ul>
+            <li>Planner creates a structured plan with steps</li>
+            <li>Human feedback allows plan refinement</li>
+            <li>Plan iterations track planning cycles</li>
+        </ul>
+      
+        </div>
+
+        <h3>3. Execution Phase</h3>
+        <ul>
+            <li>Research team routes steps to specialists</li>
+            <li>Researchers gather information</li>
+            <li>Coders execute code and analyze results</li>
+            <li>Step results accumulated in observations</li>
+        </ul>
+
+        <h3>4. Response Generation</h3>
+        <ul>
+            <li>Reporter synthesizes all observations</li>
+            <li>Formats final report with structure and citations</li>
+            <li>Returns comprehensive response to user</li>
+        </ul>
+        
+        <div class="chart-container">
+            <div class="chart-title">Data Flow Through System</div>
+            <div class="mermaid">
+flowchart TD
+    UserQuery[/"User Query"/] --> Coordinator
+    
+    Coordinator --> |"Analyze Query"| BgInvestigator
+    BgInvestigator --> |"Add Search Results"| State1[(State)]
+    
+    State1 --> Planner
+    Planner --> |"Generate Plan"| State2[(State)]
+    
+    State2 --> ResearchTeam
+    ResearchTeam --> |"Route Step"| Researcher
+    Researcher --> |"Add Observations"| State3[(State)]
+    
+    ResearchTeam --> |"Route Step"| Coder
+    Coder --> |"Add Observations"| State3
+    
+    State3 --> Reporter
+    Reporter --> |"Generate Report"| State4[(State)]
+    
+    State4 --> FinalResponse[/"Final Response"/]
+    
+    classDef input fill:#f5d742,stroke:#333,stroke-width:1px;
+    classDef state fill:#3a7563,stroke:#333,stroke-width:1px,color:white;
+    
+    class UserQuery,FinalResponse input
+    class State1,State2,State3,State4 state
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Context Management</h2>
+        
+        <h3>System-managed context</h3>
+        <ul>
+            <li>Background investigation results</li>
+            <li>Observation history</li>
+            <li>Execution flow control</li>
+            <li>Tool availability configuration</li>
+        </ul>
+
+        <h3>Agent-determined context</h3>
+        <ul>
+            <li>Plan content and structure</li>
+            <li>Research findings and emphasis</li>
+            <li>Code execution strategy</li>
+            <li>Final report organization</li>
+        </ul>
+        
+        <div class="chart-container">
+            <div class="chart-title">Context Flow in Deer Flow</div>
+            <div class="mermaid">
+flowchart TB
+    subgraph SystemContext["System Context"]
+        BgResults["Background Investigation Results"]
+        Observations["Observations Collection"]
+        FlowControl["Execution Flow Control"]
+        ToolConfig["Tool Configuration"]
+    end
+    
+    subgraph AgentContext["Agent Context"]
+        PlanContent["Plan Structure & Content"]
+        FindingsContent["Research Findings"]
+        CodeStrategy["Code Execution Strategy"]
+        ReportOrg["Report Organization"]
+    end
+    
+    subgraph SharedState["Shared State"]
+        StateObj[(State Object)]
+    end
+    
+    SystemContext --> StateObj
+    StateObj --> AgentContext
+    AgentContext --> StateObj
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Key Mechanisms</h2>
+
+        <h3>1. Command Pattern</h3>
+        <pre><code>return Command(
+    update={"key": "value"},
+    goto="next_node"
+)</code></pre>
+
+        <div class="chart-container">
+            <div class="chart-title">Command Pattern and State Updates</div>
+            <div class="mermaid">
+sequenceDiagram
+    participant Researcher as Researcher Node
+    participant State as State Object
+    participant ResearchTeam as Research Team Node
+    participant Planner as Planner Node
+    participant NextAgent as Next Agent
+    
+    Researcher->>Researcher: Execute research step
+    Researcher->>State: update: {"observations": [...]}
+    Researcher->>ResearchTeam: goto: "research_team"
+    ResearchTeam->>State: Check all steps complete?
+    alt All steps complete
+        ResearchTeam->>State: update: {}
+        ResearchTeam->>Planner: goto: "planner"
+    else Steps remaining
+        ResearchTeam->>State: Identify next step
+        ResearchTeam->>NextAgent: goto: next agent
+    end
+            </div>
+        </div>
+
+        <h3>2. Dynamic Tool Configuration</h3>
+        <ul>
+            <li>MCP (Model Control Plane) integration</li>
+            <li>Tool binding per agent type</li>
+            <li>External tool servers support</li>
+        </ul>
+
+        <h3>3. Plan Execution</h3>
+        <ul>
+            <li>Step-by-step execution</li>
+            <li>Type-based routing (research vs. processing)</li>
+            <li>Progress tracking</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Workflow Example</h2>
+        <div class="example">
+            <p><strong>User:</strong> "Compare PostgreSQL and MongoDB for web applications"</p>
+            <ol>
+                <li>Coordinator analyzes query (requires research)</li>
+                <li>Background Investigation searches the web for context</li>
+                <li>Planner creates a plan with research steps</li>
+                <li>Human reviews and approves the plan</li>
+                <li>Research Team routes to Researcher for DB comparisons</li>
+                <li>Researcher gathers information on both databases</li>
+                <li>Research Team routes to Coder for benchmark analysis</li>
+                <li>Coder executes comparison code and collects results</li>
+                <li>All results stored in observations</li>
+                <li>Reporter creates comprehensive comparison report</li>
+                <li>Final report presented to user</li>
+            </ol>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-title">Example Workflow Execution</div>
+            <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant Coord as Coordinator
+    participant BgInv as Background Investigator
+    participant Plan as Planner
+    participant Human as Human Feedback
+    participant RTeam as Research Team
+    participant Res as Researcher
+    participant Code as Coder
+    participant Rep as Reporter
+    
+    User->>Coord: "Compare PostgreSQL and MongoDB"
+    Coord->>BgInv: handoff_to_planner()
+    BgInv->>Plan: search results
+    Plan-->>Human: proposed plan
+    Human->>Plan: [ACCEPTED]
+    Plan->>RTeam: plan with steps
+    
+    RTeam->>Res: DB comparison step
+    Res-->>RTeam: database research findings
+    
+    RTeam->>Code: performance analysis step
+    Code-->>RTeam: benchmark results
+    
+    RTeam->>Plan: all steps complete
+    Plan->>Rep: synthesize report
+    Rep-->>User: comprehensive comparison
+            </div>
+        </div>
+        
+        <p>The system combines structured workflow with flexible agent behavior to deliver comprehensive responses to complex queries.</p>
+    </section>
+</body>
+</html> 
