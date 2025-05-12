@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deer Flow: AI Agent Workflow System</title>
+    <title>Deer Flow: AI代理工作流系统</title>
     <!-- Add Mermaid.js for flowcharts -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -201,43 +201,43 @@
 </head>
 <body>
     <header>
-        <h1>Deer Flow: AI Agent Workflow System</h1>
-        <p>A comprehensive explanation of core architecture and logic</p>
+        <h1>Deer Flow: AI代理工作流系统</h1>
+        <p>核心架构和逻辑的全面解释</p>
     </header>
 
     <section>
-        <h2>Core Architecture</h2>
+        <h2>核心架构</h2>
         <p>
-            Deer Flow is an AI agent workflow system that processes user queries through a directed computational graph of specialized agents. 
-            The system uses LangGraph to orchestrate the flow of information between agents, with each agent performing specific tasks and 
-            contributing to the final response.
+            Deer Flow是一个AI代理工作流系统，通过专业代理的有向计算图处理用户查询。
+            该系统使用LangGraph来协调代理之间的信息流，每个代理执行特定任务并
+            为最终响应做出贡献。
         </p>
         
         <div class="chart-container">
-            <div class="chart-title">System Architecture Overview</div>
+            <div class="chart-title">系统架构概览</div>
             <div class="mermaid">
 flowchart TB
-    User(("User")) <---> WorkflowEngine
+    User(("用户")) <---> WorkflowEngine
 
-    subgraph DeerFlowSystem["Deer Flow System"]
-        WorkflowEngine[Workflow Engine]
-        State[(Shared State)]
+    subgraph DeerFlowSystem["Deer Flow系统"]
+        WorkflowEngine[工作流引擎]
+        State[(共享状态)]
         
-        subgraph AgentGraph["Agent Graph"]
-            Coordinator[Coordinator]
-            BgInvestigator[Background Investigator]
-            Planner[Planner]
-            Feedback[Human Feedback]
-            ResearchTeam[Research Team]
-            Researcher[Researcher]
-            Coder[Coder]
-            Reporter[Reporter]
+        subgraph AgentGraph["代理图"]
+            Coordinator[协调器]
+            BgInvestigator[背景调查员]
+            Planner[规划师]
+            Feedback[人类反馈]
+            ResearchTeam[研究团队]
+            Researcher[研究员]
+            Coder[编程员]
+            Reporter[报告员]
         end
         
-        subgraph ExternalTools["External Tools"]
-            WebSearch[Web Search]
-            CodeExec[Code Execution]
-            MCP[MCP Tools]
+        subgraph ExternalTools["外部工具"]
+            WebSearch[网络搜索]
+            CodeExec[代码执行]
+            MCP[MCP工具]
         end
     end
     
@@ -252,17 +252,17 @@ flowchart TB
     </section>
 
     <section>
-        <h2>Key Components</h2>
+        <h2>关键组件</h2>
         
-        <h3>1. Workflow Engine</h3>
+        <h3>1. 工作流引擎</h3>
         <ul>
-            <li>Uses a directed graph to manage task flow</li>
-            <li>Processes user input through specialized agent nodes</li>
-            <li>Maintains shared state across the entire workflow</li>
-            <li>Streams results back to users in real-time</li>
+            <li>使用有向图管理任务流</li>
+            <li>通过专业代理节点处理用户输入</li>
+            <li>维护整个工作流的共享状态</li>
+            <li>实时向用户流式返回结果</li>
         </ul>
 
-        <h3>2. State Management</h3>
+        <h3>2. 状态管理</h3>
         <pre><code>class State(MessagesState):
     locale: str = "en-US"
     observations: list[str] = []
@@ -274,7 +274,7 @@ flowchart TB
     background_investigation_results: str = None</code></pre>
 
         <div class="chart-container">
-            <div class="chart-title">State Management Visualization</div>
+            <div class="chart-title">状态管理可视化</div>
             <div class="mermaid">
 classDiagram
     class MessagesState {
@@ -294,39 +294,39 @@ classDiagram
             </div>
         </div>
 
-        <h3>3. Agent Graph</h3>
+        <h3>3. 代理图</h3>
         <div class="flow-diagram">
-            START <span class="arrow">→</span> coordinator <span class="arrow">→</span> background_investigator <span class="arrow">→</span> planner <span class="arrow">→</span> human_feedback <span class="arrow">→</span> research_team <span class="arrow">→</span> [researcher/coder] <span class="arrow">→</span> reporter <span class="arrow">→</span> END
+            开始 <span class="arrow">→</span> coordinator <span class="arrow">→</span> background_investigator <span class="arrow">→</span> planner <span class="arrow">→</span> human_feedback <span class="arrow">→</span> research_team <span class="arrow">→</span> [researcher/coder] <span class="arrow">→</span> reporter <span class="arrow">→</span> 结束
         </div>
         
         <div class="chart-container">
-            <div class="chart-title">Complete Agent Graph with Decision Points</div>
+            <div class="chart-title">完整代理图与决策点</div>
             <div class="mermaid">
 flowchart LR
-    START(("START")) --> Coordinator
+    START(("开始")) --> Coordinator
     
-    Coordinator --> |"If needs research"| BgCheck{"Background\nInvestigation\nEnabled?"}
-    Coordinator --> |"If no research needed"| END
+    Coordinator --> |"如需研究"| BgCheck{"启用背景\n调查?"}
+    Coordinator --> |"如无需研究"| END
     
-    BgCheck --> |"Yes"| BgInvestigator
-    BgCheck --> |"No"| Planner
+    BgCheck --> |"是"| BgInvestigator
+    BgCheck --> |"否"| Planner
     
     BgInvestigator --> Planner
     
-    Planner --> |"Plan needs review"| HumanFeedback
-    Planner --> |"Plan complete"| Reporter
+    Planner --> |"计划需要审核"| HumanFeedback
+    Planner --> |"计划完成"| Reporter
     
-    HumanFeedback --> |"Edit requested"| Planner
-    HumanFeedback --> |"Approved"| ResearchTeam
+    HumanFeedback --> |"请求编辑"| Planner
+    HumanFeedback --> |"已批准"| ResearchTeam
     
-    ResearchTeam --> |"Research step"| Researcher
-    ResearchTeam --> |"Processing step"| Coder
-    ResearchTeam --> |"All steps complete"| Planner
+    ResearchTeam --> |"研究步骤"| Researcher
+    ResearchTeam --> |"处理步骤"| Coder
+    ResearchTeam --> |"所有步骤完成"| Planner
     
     Researcher --> ResearchTeam
     Coder --> ResearchTeam
     
-    Reporter --> END(("END"))
+    Reporter --> END(("结束"))
     
     classDef primary fill:#3a7563,stroke:#333,stroke-width:1px,color:white;
     classDef decision fill:#f5d742,stroke:#333,stroke-width:1px;
@@ -340,144 +340,144 @@ flowchart LR
     </section>
 
     <section>
-        <h2>Agent Roles</h2>
+        <h2>代理角色</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Agent</th>
-                    <th>Responsibility</th>
-                    <th>Tools</th>
+                    <th>代理</th>
+                    <th>职责</th>
+                    <th>工具</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>Coordinator</strong></td>
-                    <td>Initial query analysis</td>
+                    <td>初始查询分析</td>
                     <td>handoff_to_planner</td>
                 </tr>
                 <tr>
                     <td><strong>Background Investigator</strong></td>
-                    <td>Web search for context</td>
+                    <td>网络搜索背景信息</td>
                     <td>TavilySearch</td>
                 </tr>
                 <tr>
                     <td><strong>Planner</strong></td>
-                    <td>Creates execution plan</td>
-                    <td>None</td>
+                    <td>创建执行计划</td>
+                    <td>无</td>
                 </tr>
                 <tr>
                     <td><strong>Human Feedback</strong></td>
-                    <td>Reviews/approves plans</td>
-                    <td>None</td>
+                    <td>审核/批准计划</td>
+                    <td>无</td>
                 </tr>
                 <tr>
                     <td><strong>Research Team</strong></td>
-                    <td>Routes to specialists</td>
-                    <td>None</td>
+                    <td>路由至专业人员</td>
+                    <td>无</td>
                 </tr>
                 <tr>
                     <td><strong>Researcher</strong></td>
-                    <td>Information gathering</td>
+                    <td>信息收集</td>
                     <td>web_search_tool, crawl_tool</td>
                 </tr>
                 <tr>
                     <td><strong>Coder</strong></td>
-                    <td>Code execution</td>
+                    <td>代码执行</td>
                     <td>python_repl_tool</td>
                 </tr>
                 <tr>
                     <td><strong>Reporter</strong></td>
-                    <td>Final report generation</td>
-                    <td>None</td>
+                    <td>最终报告生成</td>
+                    <td>无</td>
                 </tr>
             </tbody>
         </table>
         
         <div class="chart-container">
-            <div class="chart-title">Agent Tool Integration</div>
+            <div class="chart-title">代理工具集成</div>
             <div class="mermaid">
 flowchart TB
-    subgraph ToolsSection["Tools"]
+    subgraph ToolsSection["工具"]
         HandoffTool["handoff_to_planner"]
         SearchTools["TavilySearch\nweb_search_tool\ncrawl_tool"]
         PythonTool["python_repl_tool"]
-        MCPTools["External MCP Tools"]
+        MCPTools["外部MCP工具"]
     end
     
-    subgraph AgentsSection["Agents"]
-        Coordinator["Coordinator"]
-        BgInvestigator["Background\nInvestigator"]
-        Researcher["Researcher"]
-        Coder["Coder"]
+    subgraph AgentsSection["代理"]
+        Coordinator["协调器"]
+        BgInvestigator["背景\n调查员"]
+        Researcher["研究员"]
+        Coder["编程员"]
     end
     
-    Coordinator -->|"uses"| HandoffTool
-    BgInvestigator -->|"uses"| SearchTools
-    Researcher -->|"uses"| SearchTools
-    Researcher -.->|"can use"| MCPTools
-    Coder -->|"uses"| PythonTool
-    Coder -.->|"can use"| MCPTools
+    Coordinator -->|"使用"| HandoffTool
+    BgInvestigator -->|"使用"| SearchTools
+    Researcher -->|"使用"| SearchTools
+    Researcher -.->|"可使用"| MCPTools
+    Coder -->|"使用"| PythonTool
+    Coder -.->|"可使用"| MCPTools
             </div>
         </div>
     </section>
 
     <section>
-        <h2>Execution Flow</h2>
+        <h2>执行流程</h2>
 
-        <h3>1. Query Processing</h3>
+        <h3>1. 查询处理</h3>
         <ul>
-            <li>User input enters at Coordinator</li>
-            <li>Coordinator decides whether planning is needed</li>
-            <li>Optional background investigation enhances context</li>
+            <li>用户输入从协调器进入</li>
+            <li>协调器决定是否需要规划</li>
+            <li>可选的背景调查增强上下文</li>
         </ul>
 
-        <h3>2. Planning Phase</h3>
+        <h3>2. 规划阶段</h3>
         <ul>
-            <li>Planner creates a structured plan with steps</li>
-            <li>Human feedback allows plan refinement</li>
-            <li>Plan iterations track planning cycles</li>
+            <li>规划师创建带有步骤的结构化计划</li>
+            <li>人类反馈允许计划优化</li>
+            <li>计划迭代跟踪规划周期</li>
         </ul>
       
         </div>
 
-        <h3>3. Execution Phase</h3>
+        <h3>3. 执行阶段</h3>
         <ul>
-            <li>Research team routes steps to specialists</li>
-            <li>Researchers gather information</li>
-            <li>Coders execute code and analyze results</li>
-            <li>Step results accumulated in observations</li>
+            <li>研究团队将步骤路由到专家</li>
+            <li>研究员收集信息</li>
+            <li>编程员执行代码并分析结果</li>
+            <li>步骤结果积累在观察中</li>
         </ul>
 
-        <h3>4. Response Generation</h3>
+        <h3>4. 响应生成</h3>
         <ul>
-            <li>Reporter synthesizes all observations</li>
-            <li>Formats final report with structure and citations</li>
-            <li>Returns comprehensive response to user</li>
+            <li>报告员综合所有观察</li>
+            <li>用结构和引用格式化最终报告</li>
+            <li>向用户返回全面响应</li>
         </ul>
         
         <div class="chart-container">
-            <div class="chart-title">Data Flow Through System</div>
+            <div class="chart-title">系统数据流</div>
             <div class="mermaid">
 flowchart TD
-    UserQuery[/"User Query"/] --> Coordinator
+    UserQuery[/"用户查询"/] --> Coordinator
     
-    Coordinator --> |"Analyze Query"| BgInvestigator
-    BgInvestigator --> |"Add Search Results"| State1[(State)]
+    Coordinator --> |"分析查询"| BgInvestigator
+    BgInvestigator --> |"添加搜索结果"| State1[(状态)]
     
     State1 --> Planner
-    Planner --> |"Generate Plan"| State2[(State)]
+    Planner --> |"生成计划"| State2[(状态)]
     
     State2 --> ResearchTeam
-    ResearchTeam --> |"Route Step"| Researcher
-    Researcher --> |"Add Observations"| State3[(State)]
+    ResearchTeam --> |"路由步骤"| Researcher
+    Researcher --> |"添加观察"| State3[(状态)]
     
-    ResearchTeam --> |"Route Step"| Coder
-    Coder --> |"Add Observations"| State3
+    ResearchTeam --> |"路由步骤"| Coder
+    Coder --> |"添加观察"| State3
     
     State3 --> Reporter
-    Reporter --> |"Generate Report"| State4[(State)]
+    Reporter --> |"生成报告"| State4[(状态)]
     
-    State4 --> FinalResponse[/"Final Response"/]
+    State4 --> FinalResponse[/"最终响应"/]
     
     classDef input fill:#f5d742,stroke:#333,stroke-width:1px;
     classDef state fill:#3a7563,stroke:#333,stroke-width:1px,color:white;
@@ -489,44 +489,44 @@ flowchart TD
     </section>
 
     <section>
-        <h2>Context Management</h2>
+        <h2>上下文管理</h2>
         
-        <h3>System-managed context</h3>
+        <h3>系统管理的上下文</h3>
         <ul>
-            <li>Background investigation results</li>
-            <li>Observation history</li>
-            <li>Execution flow control</li>
-            <li>Tool availability configuration</li>
+            <li>背景调查结果</li>
+            <li>观察历史</li>
+            <li>执行流程控制</li>
+            <li>工具可用性配置</li>
         </ul>
 
-        <h3>Agent-determined context</h3>
+        <h3>代理决定的上下文</h3>
         <ul>
-            <li>Plan content and structure</li>
-            <li>Research findings and emphasis</li>
-            <li>Code execution strategy</li>
-            <li>Final report organization</li>
+            <li>计划内容和结构</li>
+            <li>研究发现和重点</li>
+            <li>代码执行策略</li>
+            <li>最终报告组织</li>
         </ul>
         
         <div class="chart-container">
-            <div class="chart-title">Context Flow in Deer Flow</div>
+            <div class="chart-title">Deer Flow中的上下文流</div>
             <div class="mermaid">
 flowchart TB
-    subgraph SystemContext["System Context"]
-        BgResults["Background Investigation Results"]
-        Observations["Observations Collection"]
-        FlowControl["Execution Flow Control"]
-        ToolConfig["Tool Configuration"]
+    subgraph SystemContext["系统上下文"]
+        BgResults["背景调查结果"]
+        Observations["观察集合"]
+        FlowControl["执行流程控制"]
+        ToolConfig["工具配置"]
     end
     
-    subgraph AgentContext["Agent Context"]
-        PlanContent["Plan Structure & Content"]
-        FindingsContent["Research Findings"]
-        CodeStrategy["Code Execution Strategy"]
-        ReportOrg["Report Organization"]
+    subgraph AgentContext["代理上下文"]
+        PlanContent["计划结构与内容"]
+        FindingsContent["研究发现"]
+        CodeStrategy["代码执行策略"]
+        ReportOrg["报告组织"]
     end
     
-    subgraph SharedState["Shared State"]
-        StateObj[(State Object)]
+    subgraph SharedState["共享状态"]
+        StateObj[(状态对象)]
     end
     
     SystemContext --> StateObj
@@ -537,106 +537,106 @@ flowchart TB
     </section>
 
     <section>
-        <h2>Key Mechanisms</h2>
+        <h2>关键机制</h2>
 
-        <h3>1. Command Pattern</h3>
+        <h3>1. 命令模式</h3>
         <pre><code>return Command(
     update={"key": "value"},
     goto="next_node"
 )</code></pre>
 
         <div class="chart-container">
-            <div class="chart-title">Command Pattern and State Updates</div>
+            <div class="chart-title">命令模式和状态更新</div>
             <div class="mermaid">
 sequenceDiagram
-    participant Researcher as Researcher Node
-    participant State as State Object
-    participant ResearchTeam as Research Team Node
-    participant Planner as Planner Node
-    participant NextAgent as Next Agent
+    participant Researcher as 研究员节点
+    participant State as 状态对象
+    participant ResearchTeam as 研究团队节点
+    participant Planner as 规划师节点
+    participant NextAgent as 下一个代理
     
-    Researcher->>Researcher: Execute research step
+    Researcher->>Researcher: 执行研究步骤
     Researcher->>State: update: {"observations": [...]}
     Researcher->>ResearchTeam: goto: "research_team"
-    ResearchTeam->>State: Check all steps complete?
-    alt All steps complete
+    ResearchTeam->>State: 检查所有步骤是否完成?
+    alt 所有步骤完成
         ResearchTeam->>State: update: {}
         ResearchTeam->>Planner: goto: "planner"
-    else Steps remaining
-        ResearchTeam->>State: Identify next step
-        ResearchTeam->>NextAgent: goto: next agent
+    else 步骤剩余
+        ResearchTeam->>State: 确定下一步骤
+        ResearchTeam->>NextAgent: goto: 下一个代理
     end
             </div>
         </div>
 
-        <h3>2. Dynamic Tool Configuration</h3>
+        <h3>2. 动态工具配置</h3>
         <ul>
-            <li>MCP (Model Control Plane) integration</li>
-            <li>Tool binding per agent type</li>
-            <li>External tool servers support</li>
+            <li>MCP (Model Control Plane) 集成</li>
+            <li>每种代理类型的工具绑定</li>
+            <li>外部工具服务器支持</li>
         </ul>
 
-        <h3>3. Plan Execution</h3>
+        <h3>3. 计划执行</h3>
         <ul>
-            <li>Step-by-step execution</li>
-            <li>Type-based routing (research vs. processing)</li>
-            <li>Progress tracking</li>
+            <li>逐步执行</li>
+            <li>基于类型的路由（研究 vs. 处理）</li>
+            <li>进度跟踪</li>
         </ul>
     </section>
 
     <section>
-        <h2>Workflow Example</h2>
+        <h2>工作流示例</h2>
         <div class="example">
-            <p><strong>User:</strong> "Compare PostgreSQL and MongoDB for web applications"</p>
+            <p><strong>用户:</strong> "比较PostgreSQL和MongoDB用于Web应用"</p>
             <ol>
-                <li>Coordinator analyzes query (requires research)</li>
-                <li>Background Investigation searches the web for context</li>
-                <li>Planner creates a plan with research steps</li>
-                <li>Human reviews and approves the plan</li>
-                <li>Research Team routes to Researcher for DB comparisons</li>
-                <li>Researcher gathers information on both databases</li>
-                <li>Research Team routes to Coder for benchmark analysis</li>
-                <li>Coder executes comparison code and collects results</li>
-                <li>All results stored in observations</li>
-                <li>Reporter creates comprehensive comparison report</li>
-                <li>Final report presented to user</li>
+                <li>协调器分析查询（需要研究）</li>
+                <li>背景调查搜索网络获取上下文</li>
+                <li>规划师创建带有研究步骤的计划</li>
+                <li>人类审核并批准计划</li>
+                <li>研究团队路由到研究员进行数据库比较</li>
+                <li>研究员收集两种数据库的信息</li>
+                <li>研究团队路由到编程员进行基准分析</li>
+                <li>编程员执行比较代码并收集结果</li>
+                <li>所有结果存储在观察中</li>
+                <li>报告员创建全面比较报告</li>
+                <li>最终报告呈现给用户</li>
             </ol>
         </div>
         
         <div class="chart-container">
-            <div class="chart-title">Example Workflow Execution</div>
+            <div class="chart-title">示例工作流执行</div>
             <div class="mermaid">
 sequenceDiagram
-    actor User
-    participant Coord as Coordinator
-    participant BgInv as Background Investigator
-    participant Plan as Planner
-    participant Human as Human Feedback
-    participant RTeam as Research Team
-    participant Res as Researcher
-    participant Code as Coder
-    participant Rep as Reporter
+    actor User as 用户
+    participant Coord as 协调器
+    participant BgInv as 背景调查员
+    participant Plan as 规划师
+    participant Human as 人类反馈
+    participant RTeam as 研究团队
+    participant Res as 研究员
+    participant Code as 编程员
+    participant Rep as 报告员
     
-    User->>Coord: "Compare PostgreSQL and MongoDB"
+    User->>Coord: "比较PostgreSQL和MongoDB"
     Coord->>BgInv: handoff_to_planner()
-    BgInv->>Plan: search results
-    Plan-->>Human: proposed plan
-    Human->>Plan: [ACCEPTED]
-    Plan->>RTeam: plan with steps
+    BgInv->>Plan: 搜索结果
+    Plan-->>Human: 提议的计划
+    Human->>Plan: [已接受]
+    Plan->>RTeam: 带步骤的计划
     
-    RTeam->>Res: DB comparison step
-    Res-->>RTeam: database research findings
+    RTeam->>Res: 数据库比较步骤
+    Res-->>RTeam: 数据库研究发现
     
-    RTeam->>Code: performance analysis step
-    Code-->>RTeam: benchmark results
+    RTeam->>Code: 性能分析步骤
+    Code-->>RTeam: 基准测试结果
     
-    RTeam->>Plan: all steps complete
-    Plan->>Rep: synthesize report
-    Rep-->>User: comprehensive comparison
+    RTeam->>Plan: 所有步骤完成
+    Plan->>Rep: 综合报告
+    Rep-->>User: 全面比较
             </div>
         </div>
         
-        <p>The system combines structured workflow with flexible agent behavior to deliver comprehensive responses to complex queries.</p>
+        <p>该系统结合结构化工作流程与灵活的代理行为，为复杂查询提供全面响应。</p>
     </section>
 </body>
 </html> 
